@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { Route } from "react-router"
+import { Link } from "react-router-dom"
+import  CurrencysList  from "./CurrencysList/CurrencysList"
+import ExchangePage from "./pages/ExchangePage"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export const App = () => {
+
+    const [currencys,setCurrencys] = useState([])
+
+    const currencysObj = currencys.reduce((map,item) => ({
+        ...map,
+        [item.ccy]:item
+    }),{})
+
+    useEffect(() => {
+        axios.get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
+        .then(res => res.data)
+        .then(data => setCurrencys(data))
+    },[])
+    return (
+        <>  
+            {console.log(currencys)}
+            <h1>Currency Exchange App</h1>
+            <Route path="/" exact render={() => <CurrencysList currencys={currencys}/>}/>
+            <Route path="/:ccy" render={({match}) => <ExchangePage match={match} currencysObj={currencysObj}/>} />
+            <Link to="/">Link to Home page</Link>
+        </>
+    )
 }
-
-export default App;
