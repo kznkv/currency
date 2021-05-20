@@ -1,0 +1,10 @@
+
+
+.history-item:nth-child(odd) {
+    background-color: #ccc;
+
+}
+.history-item > div {
+    padding: 15px;
+    margin: 10px;
+}

@@ -23,7 +23,8 @@ const CurrencysList = ({
                     sale={sale}
                 />
             ))}
-            <Link to={`/${Object.keys(defaultValue.defaultValue)}`}>Next</Link>
+            <Link to={`/currencys/${Object.keys(defaultValue.defaultValue)}`}>Next</Link>
+            
         </div>
         
     )
